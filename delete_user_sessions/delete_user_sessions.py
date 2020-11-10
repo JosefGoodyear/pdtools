@@ -42,13 +42,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
     session = APISession(args.api_key)
     if args.file:
-        print("False")
         user_emails = get_users_from_file(args.file)
         user_ids = add_users_from_file(user_emails)
     elif args.all is True:
-        print("True")
         user_ids = add_all_users()
-    if args.all is True or args.file:
+    try:
         delete_user_sessions(user_ids)
-    else:
+    except NameError:
         print("Please use the -f flag to use a csv file or the -a flag to delete sessions for all users")
